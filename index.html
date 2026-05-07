@@ -217,19 +217,21 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
 .tool-desc {
   background: linear-gradient(135deg, #F1F8E9, #DCEDC8);
   border: 1px solid #AED581; border-radius: 14px;
-  padding: 18px 20px; margin-top: 20px;
+  padding: 14px 18px; margin-top: 20px;
 }
-.tool-desc-title {
-  font-size: 14px; font-weight: 800; color: #33691E;
-  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+.tool-desc summary {
+  cursor: pointer; font-weight: 700; font-size: 13px; color: #33691E;
+  list-style: none; user-select: none;
 }
-.tool-desc-list { list-style: none; padding: 0; }
+.tool-desc summary::-webkit-details-marker { display: none; }
+.tool-desc-list { list-style: none; padding: 0; margin: 10px 0 0; }
 .tool-desc-list li {
   font-size: 12px; color: #555; padding: 4px 0;
   padding-left: 16px; position: relative; line-height: 1.6;
 }
 .tool-desc-list li::before { content: '✓'; position: absolute; left: 0; color: #7CB342; font-weight: 700; }
 .tool-desc-note { font-size: 11px; color: #999; margin-top: 10px; border-top: 1px solid #C5E1A5; padding-top: 8px; }
+.tool-footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 10px; }
 
 /* 모바일 최적화 */
 @media (max-width: 400px) {
@@ -559,18 +561,21 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
   </div>
 
   <!-- ── 도구 설명 박스 ── -->
-  <div class="tool-desc">
-    <div class="tool-desc-title">🔢 이 계산기는 어떻게 계산하나요?</div>
-    <ul class="tool-desc-list">
-      <li><b>적금 단리:</b> 각 회차 납입금 × 금리 × 잔여기간/12 합산 (대부분 시중 적금)</li>
-      <li><b>적금 월복리:</b> 매월 납입 후 (잔액 + 납입액) × (1 + 월금리) 반복 누적</li>
-      <li><b>예금 단리:</b> 예치금 × 금리 × 기간/12 (정기예금 기본)</li>
-      <li><b>예금 월복리:</b> 예치금 × ((1 + 월금리)^기간 − 1)</li>
-      <li><b>이자소득세:</b> 일반과세 15.4% / 세금우대 9.5% / 비과세 0% 적용</li>
-      <li><b>실질 수익률:</b> 피셔 방정식 — 명목이자율 − 물가상승률 (근사)</li>
-    </ul>
-    <p class="tool-desc-note">※ 참고용 계산기입니다. 실제 이자는 각 금융기관의 상품 약관과 이자 지급 방식에 따라 다를 수 있어요. 가입 전 금융기관 공식 사이트에서 반드시 확인하세요.</p>
-  </div>
+  <details class="tool-desc">
+    <summary>🛠️ 이 계산기는 어떻게 계산하나요? ▼</summary>
+    <div style="padding:4px 0 0;">
+      <ul class="tool-desc-list">
+        <li><b>적금 단리:</b> 각 회차 납입금 × 금리 × 잔여기간/12 합산 (대부분 시중 적금)</li>
+        <li><b>적금 월복리:</b> 매월 납입 후 (잔액 + 납입액) × (1 + 월금리) 반복 누적</li>
+        <li><b>예금 단리:</b> 예치금 × 금리 × 기간/12 (정기예금 기본)</li>
+        <li><b>예금 월복리:</b> 예치금 × ((1 + 월금리)^기간 − 1)</li>
+        <li><b>이자소득세:</b> 일반과세 15.4% / 세금우대 9.5% / 비과세 0% 적용</li>
+        <li><b>실질 수익률:</b> 피셔 방정식 — 명목이자율 − 물가상승률 (근사)</li>
+      </ul>
+      <p class="tool-desc-note">※ 참고용 계산기입니다. 실제 이자는 각 금융기관의 상품 약관과 이자 지급 방식에 따라 다를 수 있어요. 가입 전 금융기관 공식 사이트에서 반드시 확인하세요.</p>
+    </div>
+  </details>
+  <p class="tool-footer">© 피그의 일상정리</p>
 </div>
 
 <script>
