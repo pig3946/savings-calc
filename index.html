@@ -19,12 +19,15 @@ body {
 h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
 .subtitle { text-align: center; color: #888; font-size: 13px; margin-bottom: 20px; }
 
-/* 탭 */
-.tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+/* 탭 — 2×2 그리드 */
+.tabs {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin-bottom: 20px;
+}
 .tab {
-  flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px;
-  text-align: center; font-size: 14px; font-weight: 700; cursor: pointer;
-  background: #fff; color: #666; transition: all 0.2s;
+  padding: 11px 6px; border: 2px solid #e0e0e0; border-radius: 10px;
+  text-align: center; font-size: 13px; font-weight: 700; cursor: pointer;
+  background: #fff; color: #666; transition: all 0.2s; line-height: 1.3;
 }
 .tab.active { background: #43A047; color: #fff; border-color: #43A047; }
 
@@ -94,10 +97,7 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
 
 /* 비율 바 */
 .ratio-wrap { margin: 12px 0 4px; }
-.ratio-bar {
-  height: 18px; border-radius: 9px; overflow: hidden;
-  display: flex;
-}
+.ratio-bar { height: 18px; border-radius: 9px; overflow: hidden; display: flex; }
 .ratio-principal { background: #64B5F6; transition: width 0.5s; }
 .ratio-interest  { background: #FF7043; transition: width 0.5s; }
 .ratio-legend {
@@ -123,32 +123,138 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
 }
 .monthly-table tr:nth-child(even) td { background: #fafafa; }
 
+/* ─── 인플레이션 섹션 ───────────────────────────────────── */
+.inflation-section {
+  background: #FFF8E1; border: 1px solid #FFD54F;
+  border-radius: 10px; padding: 14px; margin-top: 12px;
+}
+.inflation-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; font-size: 13px; font-weight: 700; color: #F57F17;
+}
+.inflation-body { display: none; margin-top: 12px; }
+.inflation-row {
+  display: flex; justify-content: space-between; font-size: 13px;
+  padding: 5px 0; border-bottom: 1px solid #FFE082;
+}
+.inflation-row:last-child { border: none; }
+.inflation-input-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+}
+.inflation-input-row label { font-size: 12px; color: #555; white-space: nowrap; }
+.inflation-input-row input {
+  width: 80px; padding: 6px; border: 1px solid #FFD54F;
+  border-radius: 6px; font-size: 14px; text-align: right;
+}
+.inflation-note { font-size: 11px; color: #999; margin-top: 8px; }
+
+/* ─── 목표 역산 결과 ──────────────────────────────────── */
+.goal-result {
+  display: none; margin-top: 20px;
+  background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+  border-radius: 14px; padding: 20px; text-align: center;
+}
+.goal-result .amount {
+  font-size: 36px; font-weight: 800; color: #0D47A1;
+  letter-spacing: -1px; margin: 8px 0;
+}
+.goal-result .label { font-size: 13px; color: #555; }
+.goal-result-detail {
+  background: #f8f9fa; border-radius: 10px; padding: 14px; margin-top: 14px;
+}
+
+/* ─── 비교 탭 ────────────────────────────────────────── */
+.compare-toggle { display: flex; gap: 8px; margin-bottom: 14px; }
+.compare-type {
+  flex: 1; padding: 10px 6px; border: 2px solid #e0e0e0; border-radius: 8px;
+  text-align: center; font-size: 12px; cursor: pointer; transition: all 0.2s;
+  line-height: 1.6; font-weight: 700; color: #666;
+}
+.compare-type.active { border-color: #43A047; background: #E8F5E9; color: #2E7D32; }
+
+.compare-banks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.bank-input { display: flex; flex-direction: column; gap: 4px; }
+.bank-input label { font-size: 11px; color: #666; font-weight: 700; text-align: center; }
+.bank-input input {
+  width: 100%; padding: 10px 6px; border: 2px solid #e0e0e0;
+  border-radius: 8px; font-size: 14px; text-align: center; outline: none;
+}
+.bank-input input:focus { border-color: #43A047; }
+
+.compare-results { display: none; margin-top: 20px; }
+.compare-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.compare-card {
+  border: 2px solid #e0e0e0; border-radius: 12px; padding: 12px 8px;
+  text-align: center; transition: all 0.3s;
+}
+.compare-card.best { border-color: #43A047; background: #E8F5E9; }
+.compare-card .bank-name { font-size: 12px; color: #666; margin-bottom: 4px; }
+.compare-card .bank-rate { font-size: 16px; font-weight: 800; color: #333; }
+.compare-card .bank-total { font-size: 13px; font-weight: 700; color: #1B5E20; margin-top: 6px; }
+.compare-card .bank-interest { font-size: 11px; color: #888; }
+.compare-card.best .bank-name::after { content: ' ⭐'; }
+.compare-detail {
+  background: #f8f9fa; border-radius: 10px; padding: 14px;
+}
+.compare-detail table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.compare-detail th {
+  background: #f0f0f0; padding: 8px 4px; border: 1px solid #e0e0e0;
+  text-align: center; font-weight: 700;
+}
+.compare-detail td {
+  padding: 7px 4px; border: 1px solid #e0e0e0; text-align: right;
+}
+.compare-detail .best-col { background: #E8F5E9; font-weight: 700; color: #1B5E20; }
+
+/* 블로그 링크 */
 .blog-link {
   display: block; text-align: center; margin-top: 16px; padding: 13px;
   background: #03C75A; color: #fff; border-radius: 12px;
   text-decoration: none; font-weight: 700; font-size: 14px;
 }
-.footer { text-align: center; color: #aaa; font-size: 11px; margin-top: 14px; }
+
+/* ─── 도구 설명 박스 ──────────────────────────────────── */
+.tool-desc {
+  background: linear-gradient(135deg, #F1F8E9, #DCEDC8);
+  border: 1px solid #AED581; border-radius: 14px;
+  padding: 18px 20px; margin-top: 20px;
+}
+.tool-desc-title {
+  font-size: 14px; font-weight: 800; color: #33691E;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.tool-desc-list { list-style: none; padding: 0; }
+.tool-desc-list li {
+  font-size: 12px; color: #555; padding: 4px 0;
+  padding-left: 16px; position: relative; line-height: 1.6;
+}
+.tool-desc-list li::before { content: '✓'; position: absolute; left: 0; color: #7CB342; font-weight: 700; }
+.tool-desc-note { font-size: 11px; color: #999; margin-top: 10px; border-top: 1px solid #C5E1A5; padding-top: 8px; }
 
 /* 모바일 최적화 */
 @media (max-width: 400px) {
   .container { padding: 20px 16px; }
   .result-summary .amount { font-size: 26px; }
+  .goal-result .amount { font-size: 28px; }
+  .compare-cards { grid-template-columns: 1fr; }
+  .compare-banks { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>💰 적금·예금 이자 계산기</h1>
-  <p class="subtitle">세후 실수령액까지 한 번에 계산해요</p>
+  <p class="subtitle">세후 실수령액 · 목표 역산 · 은행 비교까지</p>
 
-  <!-- 탭 -->
+  <!-- 탭 2×2 -->
   <div class="tabs">
-    <div class="tab active" id="tab-savings" onclick="switchTab('savings')">📥 적금 (매월 납입)</div>
-    <div class="tab" id="tab-deposit" onclick="switchTab('deposit')">🏦 예금 (목돈 거치)</div>
+    <div class="tab active" id="tab-savings" onclick="switchTab('savings')">📥 적금<br><small>매월 납입</small></div>
+    <div class="tab" id="tab-deposit" onclick="switchTab('deposit')">🏦 예금<br><small>목돈 거치</small></div>
+    <div class="tab" id="tab-goal" onclick="switchTab('goal')">🎯 목표 역산<br><small>월 얼마씩?</small></div>
+    <div class="tab" id="tab-compare" onclick="switchTab('compare')">⚖️ 금리 비교<br><small>3개 동시 비교</small></div>
   </div>
 
-  <!-- 적금 입력 -->
+  <!-- ── 적금 입력 ── -->
   <div id="savings-form">
     <div class="input-group">
       <label>월 납입금액</label>
@@ -168,9 +274,28 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
       <input type="number" id="period-custom" placeholder="개월 수 직접 입력"
              style="display:none; margin-top:6px;" min="1" max="120">
     </div>
+    <!-- 공통 금리 / 방식 / 세금 -->
+    <div id="rate-block-savings">
+      <div class="input-group">
+        <label>연 금리 (%)</label>
+        <input type="number" id="rate" placeholder="예: 3.5" step="0.01" value="3.5" min="0" max="30">
+      </div>
+      <div class="input-group"><label>이자 계산 방식</label></div>
+      <div class="method-options">
+        <div class="method-opt active" onclick="selectMethod(this,'simple')">단리<br><b>일반 적금</b></div>
+        <div class="method-opt" onclick="selectMethod(this,'compound')">월복리<br><b>복리 적금</b></div>
+      </div>
+      <div class="input-group"><label>세금 옵션</label></div>
+      <div class="tax-options">
+        <div class="tax-opt active" onclick="selectTax(this,15.4)">일반과세<br><b>15.4%</b></div>
+        <div class="tax-opt" onclick="selectTax(this,9.5)">세금우대<br><b>9.5%</b></div>
+        <div class="tax-opt" onclick="selectTax(this,0)">비과세<br><b>0%</b></div>
+      </div>
+    </div>
+    <button class="btn" onclick="calculate()">💰 이자 계산하기</button>
   </div>
 
-  <!-- 예금 입력 -->
+  <!-- ── 예금 입력 ── -->
   <div id="deposit-form" style="display:none;">
     <div class="input-group">
       <label>예치 금액</label>
@@ -190,43 +315,133 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
       <input type="number" id="deposit-period-custom" placeholder="개월 수 직접 입력"
              style="display:none; margin-top:6px;" min="1" max="120">
     </div>
+    <div class="input-group">
+      <label>연 금리 (%)</label>
+      <input type="number" id="rate-dep" placeholder="예: 3.5" step="0.01" value="3.5" min="0" max="30">
+    </div>
+    <div class="input-group"><label>이자 계산 방식</label></div>
+    <div class="method-options" id="dep-method-opts">
+      <div class="method-opt active" onclick="selectMethod(this,'simple','dep')">단리<br><b>일반 예금</b></div>
+      <div class="method-opt" onclick="selectMethod(this,'compound','dep')">월복리<br><b>복리 예금</b></div>
+    </div>
+    <div class="input-group"><label>세금 옵션</label></div>
+    <div class="tax-options" id="dep-tax-opts">
+      <div class="tax-opt active" onclick="selectTax(this,15.4,'dep')">일반과세<br><b>15.4%</b></div>
+      <div class="tax-opt" onclick="selectTax(this,9.5,'dep')">세금우대<br><b>9.5%</b></div>
+      <div class="tax-opt" onclick="selectTax(this,0,'dep')">비과세<br><b>0%</b></div>
+    </div>
+    <button class="btn" onclick="calculate()">💰 이자 계산하기</button>
   </div>
 
-  <!-- 금리 -->
-  <div class="input-group">
-    <label>연 금리 (%)</label>
-    <input type="number" id="rate" placeholder="예: 3.5" step="0.01" value="3.5" min="0" max="30">
+  <!-- ── 목표 역산 입력 ── -->
+  <div id="goal-form" style="display:none;">
+    <div style="background:#E3F2FD;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#1565C0;line-height:1.7;">
+      목표 금액을 입력하면 <b>매달 얼마씩 납입해야 하는지</b> 계산해드려요.<br>
+      (적금 단리 / 월복리 기준)
+    </div>
+    <div class="input-group">
+      <label>🎯 목표 금액 (세후 수령액)</label>
+      <input type="text" id="goal-amount" placeholder="예: 10,000,000"
+             oninput="formatNumber(this)" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>납입 기간</label>
+      <select id="goal-period">
+        <option value="6">6개월</option>
+        <option value="12" selected>12개월 (1년)</option>
+        <option value="18">18개월</option>
+        <option value="24">24개월 (2년)</option>
+        <option value="36">36개월 (3년)</option>
+        <option value="custom">직접 입력</option>
+      </select>
+      <input type="number" id="goal-period-custom" placeholder="개월 수 직접 입력"
+             style="display:none; margin-top:6px;" min="1" max="120">
+    </div>
+    <div class="input-group">
+      <label>연 금리 (%)</label>
+      <input type="number" id="rate-goal" placeholder="예: 3.5" step="0.01" value="3.5" min="0" max="30">
+    </div>
+    <div class="input-group"><label>이자 계산 방식</label></div>
+    <div class="method-options" id="goal-method-opts">
+      <div class="method-opt active" onclick="selectMethod(this,'simple','goal')">단리<br><b>일반 적금</b></div>
+      <div class="method-opt" onclick="selectMethod(this,'compound','goal')">월복리<br><b>복리 적금</b></div>
+    </div>
+    <div class="input-group"><label>세금 옵션</label></div>
+    <div class="tax-options" id="goal-tax-opts">
+      <div class="tax-opt active" onclick="selectTax(this,15.4,'goal')">일반과세<br><b>15.4%</b></div>
+      <div class="tax-opt" onclick="selectTax(this,9.5,'goal')">세금우대<br><b>9.5%</b></div>
+      <div class="tax-opt" onclick="selectTax(this,0,'goal')">비과세<br><b>0%</b></div>
+    </div>
+    <button class="btn" onclick="calcGoal()">🎯 필요 납입액 계산하기</button>
   </div>
 
-  <!-- 이자 방식 -->
-  <div class="input-group">
-    <label>이자 계산 방식</label>
-  </div>
-  <div class="method-options">
-    <div class="method-opt active" onclick="selectMethod(this,'simple')">단리<br><b>일반 적금</b></div>
-    <div class="method-opt" onclick="selectMethod(this,'compound')">월복리<br><b>복리 적금</b></div>
+  <!-- ── 비교 탭 입력 ── -->
+  <div id="compare-form" style="display:none;">
+    <div style="background:#E8F5E9;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#2E7D32;line-height:1.7;">
+      같은 금액·기간으로 <b>최대 3개 금리를 동시에 비교</b>해요.<br>
+      가장 유리한 금리에 ⭐ 표시해드려요.
+    </div>
+    <div class="input-group"><label>계산 유형</label></div>
+    <div class="compare-toggle">
+      <div class="compare-type active" id="cmp-type-savings" onclick="selectCompareType('savings')">📥 적금<br><small>매월 납입</small></div>
+      <div class="compare-type" id="cmp-type-deposit" onclick="selectCompareType('deposit')">🏦 예금<br><small>목돈 거치</small></div>
+    </div>
+    <div class="input-group">
+      <label id="cmp-amount-label">월 납입금액</label>
+      <input type="text" id="cmp-amount" placeholder="예: 500,000"
+             oninput="formatNumber(this)" inputmode="numeric">
+    </div>
+    <div class="input-group">
+      <label>기간</label>
+      <select id="cmp-period">
+        <option value="6">6개월</option>
+        <option value="12" selected>12개월 (1년)</option>
+        <option value="18">18개월</option>
+        <option value="24">24개월 (2년)</option>
+        <option value="36">36개월 (3년)</option>
+        <option value="custom">직접 입력</option>
+      </select>
+      <input type="number" id="cmp-period-custom" placeholder="개월 수 직접 입력"
+             style="display:none; margin-top:6px;" min="1" max="120">
+    </div>
+    <div class="input-group"><label>이자 계산 방식</label></div>
+    <div class="method-options" id="cmp-method-opts">
+      <div class="method-opt active" onclick="selectMethod(this,'simple','cmp')">단리</div>
+      <div class="method-opt" onclick="selectMethod(this,'compound','cmp')">월복리</div>
+    </div>
+    <div class="input-group"><label>세금 옵션</label></div>
+    <div class="tax-options" id="cmp-tax-opts">
+      <div class="tax-opt active" onclick="selectTax(this,15.4,'cmp')">일반과세<br><b>15.4%</b></div>
+      <div class="tax-opt" onclick="selectTax(this,9.5,'cmp')">세금우대<br><b>9.5%</b></div>
+      <div class="tax-opt" onclick="selectTax(this,0,'cmp')">비과세<br><b>0%</b></div>
+    </div>
+    <div class="input-group">
+      <label>비교할 연 금리 3개 (%)</label>
+    </div>
+    <div class="compare-banks">
+      <div class="bank-input">
+        <label>A 금리</label>
+        <input type="number" id="cmp-rate-a" value="3.5" step="0.1" min="0" max="30">
+      </div>
+      <div class="bank-input">
+        <label>B 금리</label>
+        <input type="number" id="cmp-rate-b" value="4.0" step="0.1" min="0" max="30">
+      </div>
+      <div class="bank-input">
+        <label>C 금리</label>
+        <input type="number" id="cmp-rate-c" value="4.5" step="0.1" min="0" max="30">
+      </div>
+    </div>
+    <button class="btn" onclick="calcCompare()">⚖️ 금리 비교하기</button>
   </div>
 
-  <!-- 세금 옵션 -->
-  <div class="input-group">
-    <label>세금 옵션</label>
-  </div>
-  <div class="tax-options">
-    <div class="tax-opt active" onclick="selectTax(this, 15.4)">일반과세<br><b>15.4%</b></div>
-    <div class="tax-opt" onclick="selectTax(this, 9.5)">세금우대<br><b>9.5%</b></div>
-    <div class="tax-opt" onclick="selectTax(this, 0)">비과세<br><b>0%</b></div>
-  </div>
-
-  <button class="btn" onclick="calculate()">💰 이자 계산하기</button>
-
-  <!-- 결과 -->
+  <!-- ── 결과 (적금/예금 공통) ── -->
   <div class="result" id="result">
     <div class="result-summary">
       <p class="label">세후 총 수령액</p>
       <p class="amount" id="r-total"></p>
       <p class="label" id="r-sub"></p>
     </div>
-
     <div class="result-detail">
       <div class="result-row">
         <span class="label">💵 총 납입(원금)</span>
@@ -249,10 +464,9 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
         <span class="value" id="r-monthly-interest"></span>
       </div>
     </div>
-
     <!-- 비율 바 -->
     <div class="ratio-wrap">
-      <p style="font-size:12px; color:#888; margin-bottom:6px;">원금 vs 이자 비율</p>
+      <p style="font-size:12px;color:#888;margin-bottom:6px;">원금 vs 이자 비율</p>
       <div class="ratio-bar">
         <div class="ratio-principal" id="r-bar-p"></div>
         <div class="ratio-interest"  id="r-bar-i"></div>
@@ -262,62 +476,173 @@ h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
         <span>🟠 이자 <b id="r-pct-i"></b></span>
       </div>
     </div>
-
+    <!-- 인플레이션 섹션 -->
+    <div class="inflation-section" id="inflation-section">
+      <div class="inflation-toggle" onclick="toggleInflation()">
+        <span>🌡️ 인플레이션 반영 실질 수익률</span>
+        <span id="inflation-arrow">▼</span>
+      </div>
+      <div class="inflation-body" id="inflation-body">
+        <div class="inflation-input-row">
+          <label>물가상승률 (연 %)</label>
+          <input type="number" id="inflation-rate" value="2.5" step="0.1" min="0" max="20">
+          <button onclick="recalcInflation()" style="padding:6px 12px;border:none;background:#43A047;color:#fff;border-radius:6px;font-size:12px;cursor:pointer;font-weight:700;">적용</button>
+        </div>
+        <div class="inflation-row">
+          <span style="color:#555;">명목 이자율</span>
+          <span style="font-weight:700;" id="inf-nominal"></span>
+        </div>
+        <div class="inflation-row">
+          <span style="color:#555;">물가상승률</span>
+          <span style="color:#E53935;font-weight:700;" id="inf-inflation">-2.5%</span>
+        </div>
+        <div class="inflation-row">
+          <span style="color:#555;">실질 수익률 (근사)</span>
+          <span style="font-weight:700;" id="inf-real"></span>
+        </div>
+        <div class="inflation-row" style="border-top:1px solid #FFD54F; padding-top:8px; margin-top:4px;">
+          <span style="color:#555;">현재 가치 기준 수령액</span>
+          <span style="font-weight:800;color:#F57F17;" id="inf-real-total"></span>
+        </div>
+        <p class="inflation-note">※ 피셔 방정식: 실질수익률 ≈ 명목이자율 − 물가상승률<br>현재가치 = 수령액 ÷ (1 + 물가상승률)^(기간/12)</p>
+      </div>
+    </div>
     <!-- 월별 상세 (적금만) -->
     <div id="monthly-toggle-wrap">
       <p class="monthly-toggle" onclick="toggleMonthly()">📊 회차별 상세 보기 ▼</p>
       <div class="monthly-table" id="monthly-detail"></div>
     </div>
-
     <a class="blog-link" href="https://blog.naver.com/pig_lifetime" target="_blank">
       📝 적금 추천 + 재테크 정보 보러가기 →
     </a>
   </div>
 
-  <p class="footer">© 피그의 일상정리 | 참고용 계산기예요. 실제 이자는 금융기관에서 확인하세요.</p>
+  <!-- ── 목표 역산 결과 ── -->
+  <div class="goal-result" id="goal-result">
+    <p class="label">매달 납입해야 할 금액</p>
+    <p class="amount" id="gr-monthly"></p>
+    <p class="label" id="gr-sub"></p>
+    <div class="goal-result-detail">
+      <div class="result-row">
+        <span class="label">🎯 목표 금액 (세후)</span>
+        <span class="value" id="gr-goal"></span>
+      </div>
+      <div class="result-row">
+        <span class="label">📅 납입 기간</span>
+        <span class="value" id="gr-period"></span>
+      </div>
+      <div class="result-row">
+        <span class="label">💹 연 금리</span>
+        <span class="value" id="gr-rate"></span>
+      </div>
+      <div class="result-row">
+        <span class="label">💵 총 납입 원금</span>
+        <span class="value" id="gr-principal"></span>
+      </div>
+      <div class="result-row">
+        <span class="label">✅ 예상 세후 이자</span>
+        <span class="value green" id="gr-interest"></span>
+      </div>
+    </div>
+    <a class="blog-link" href="https://blog.naver.com/pig_lifetime" target="_blank">
+      📝 적금 추천 + 재테크 정보 보러가기 →
+    </a>
+  </div>
+
+  <!-- ── 비교 결과 ── -->
+  <div class="compare-results" id="compare-results">
+    <div class="compare-cards" id="compare-cards"></div>
+    <div class="compare-detail" id="compare-detail"></div>
+    <a class="blog-link" href="https://blog.naver.com/pig_lifetime" target="_blank" style="margin-top:12px;">
+      📝 적금 추천 + 재테크 정보 보러가기 →
+    </a>
+  </div>
+
+  <!-- ── 도구 설명 박스 ── -->
+  <div class="tool-desc">
+    <div class="tool-desc-title">🔢 이 계산기는 어떻게 계산하나요?</div>
+    <ul class="tool-desc-list">
+      <li><b>적금 단리:</b> 각 회차 납입금 × 금리 × 잔여기간/12 합산 (대부분 시중 적금)</li>
+      <li><b>적금 월복리:</b> 매월 납입 후 (잔액 + 납입액) × (1 + 월금리) 반복 누적</li>
+      <li><b>예금 단리:</b> 예치금 × 금리 × 기간/12 (정기예금 기본)</li>
+      <li><b>예금 월복리:</b> 예치금 × ((1 + 월금리)^기간 − 1)</li>
+      <li><b>이자소득세:</b> 일반과세 15.4% / 세금우대 9.5% / 비과세 0% 적용</li>
+      <li><b>실질 수익률:</b> 피셔 방정식 — 명목이자율 − 물가상승률 (근사)</li>
+    </ul>
+    <p class="tool-desc-note">※ 참고용 계산기입니다. 실제 이자는 각 금융기관의 상품 약관과 이자 지급 방식에 따라 다를 수 있어요. 가입 전 금융기관 공식 사이트에서 반드시 확인하세요.</p>
+  </div>
 </div>
 
 <script>
-let currentTab   = 'savings';
-let taxRate      = 15.4;
-let interestMethod = 'simple';
+let currentTab      = 'savings';
+let taxRate         = 15.4;
+let taxRateDep      = 15.4;
+let taxRateGoal     = 15.4;
+let taxRateCmp      = 15.4;
+let interestMethod  = 'simple';
+let methodDep       = 'simple';
+let methodGoal      = 'simple';
+let methodCmp       = 'simple';
+let compareType     = 'savings';
 
-// ── 탭 전환 ────────────────────────────────────────────────────
+// 결과 캐시 (인플레이션 재계산용)
+let _lastCalcResult = null;
+
+// ── 탭 전환 ─────────────────────────────────────────────────
 function switchTab(tab) {
   currentTab = tab;
-  document.getElementById('tab-savings').classList.toggle('active', tab === 'savings');
-  document.getElementById('tab-deposit').classList.toggle('active', tab === 'deposit');
-  document.getElementById('savings-form').style.display = tab === 'savings' ? 'block' : 'none';
-  document.getElementById('deposit-form').style.display = tab === 'deposit' ? 'block' : 'none';
-  document.getElementById('monthly-toggle-wrap').style.display = tab === 'savings' ? 'block' : 'none';
-  document.getElementById('result').style.display = 'none';
+  ['savings','deposit','goal','compare'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+    const form = document.getElementById(t+'-form');
+    if (form) form.style.display = t === tab ? 'block' : 'none';
+  });
+  document.getElementById('result').style.display          = 'none';
+  document.getElementById('goal-result').style.display     = 'none';
+  document.getElementById('compare-results').style.display = 'none';
 }
 
-// ── 세금 선택 ──────────────────────────────────────────────────
-function selectTax(el, rate) {
-  taxRate = rate;
-  document.querySelectorAll('.tax-opt').forEach(t => t.classList.remove('active'));
+// ── 세금 선택 ────────────────────────────────────────────────
+function selectTax(el, rate, ctx) {
+  if (!ctx || ctx === 'main') { taxRate = rate; }
+  else if (ctx === 'dep')     { taxRateDep = rate; }
+  else if (ctx === 'goal')    { taxRateGoal = rate; }
+  else if (ctx === 'cmp')     { taxRateCmp = rate; }
+  // 같은 부모 내 .tax-opt 토글
+  el.parentElement.querySelectorAll('.tax-opt').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
 
-// ── 이자 방식 선택 ─────────────────────────────────────────────
-function selectMethod(el, method) {
-  interestMethod = method;
-  document.querySelectorAll('.method-opt').forEach(t => t.classList.remove('active'));
+// ── 이자 방식 선택 ───────────────────────────────────────────
+function selectMethod(el, method, ctx) {
+  if (!ctx || ctx === 'main') { interestMethod = method; }
+  else if (ctx === 'dep')     { methodDep = method; }
+  else if (ctx === 'goal')    { methodGoal = method; }
+  else if (ctx === 'cmp')     { methodCmp = method; }
+  el.parentElement.querySelectorAll('.method-opt').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
 
-// ── 기간 직접 입력 토글 ────────────────────────────────────────
-document.getElementById('period').addEventListener('change', function() {
-  document.getElementById('period-custom').style.display =
-    this.value === 'custom' ? 'block' : 'none';
-});
-document.getElementById('deposit-period').addEventListener('change', function() {
-  document.getElementById('deposit-period-custom').style.display =
-    this.value === 'custom' ? 'block' : 'none';
+// ── 비교 유형 선택 ───────────────────────────────────────────
+function selectCompareType(t) {
+  compareType = t;
+  document.getElementById('cmp-type-savings').classList.toggle('active', t === 'savings');
+  document.getElementById('cmp-type-deposit').classList.toggle('active', t === 'deposit');
+  document.getElementById('cmp-amount-label').textContent =
+    t === 'savings' ? '월 납입금액' : '예치 금액';
+}
+
+// ── 기간 직접 입력 토글 ──────────────────────────────────────
+['period','deposit-period','goal-period','cmp-period'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('change', function() {
+    const customId = id + '-custom';
+    const custom = document.getElementById(customId);
+    if (custom) custom.style.display = this.value === 'custom' ? 'block' : 'none';
+  });
 });
 
-// ── 천단위 콤마 ────────────────────────────────────────────────
+// ── 천단위 콤마 ──────────────────────────────────────────────
 function formatNumber(input) {
   const raw = input.value.replace(/[^\d]/g, '');
   if (raw) input.value = Number(raw).toLocaleString('ko-KR');
@@ -328,101 +653,236 @@ function parseNumber(str) {
 }
 function getPeriod(selectId, customId) {
   const sel = document.getElementById(selectId).value;
-  if (sel === 'custom') {
-    return parseInt(document.getElementById(customId).value, 10) || 0;
-  }
+  if (sel === 'custom') return parseInt(document.getElementById(customId).value, 10) || 0;
   return parseInt(sel, 10);
 }
 
-// ── 계산 ───────────────────────────────────────────────────────
-function calculate() {
-  const annualRate = parseFloat(document.getElementById('rate').value);
-  if (isNaN(annualRate) || annualRate <= 0) { alert('금리를 올바르게 입력해주세요!'); return; }
+// ── 이자 계산 (공통 유틸) ─────────────────────────────────────
+function calcInterest(type, amount, months, annualRate, method, tax) {
   const rate = annualRate / 100;
-
-  let principal = 0, grossInterest = 0, months = 0;
-  let monthlyAmt = 0;
-
-  if (currentTab === 'savings') {
-    monthlyAmt = parseNumber(document.getElementById('monthly').value);
-    months     = getPeriod('period', 'period-custom');
-    if (!monthlyAmt) { alert('월 납입금액을 입력해주세요!'); return; }
-    if (!months || months < 1) { alert('기간을 입력해주세요!'); return; }
-    principal = monthlyAmt * months;
-
-    if (interestMethod === 'simple') {
+  let principal = 0, grossInterest = 0;
+  if (type === 'savings') {
+    principal = amount * months;
+    if (method === 'simple') {
       for (let i = 1; i <= months; i++) {
-        grossInterest += monthlyAmt * rate * (months - i + 1) / 12;
+        grossInterest += amount * rate * (months - i + 1) / 12;
       }
     } else {
       const mr = rate / 12;
       let total = 0;
-      for (let i = 0; i < months; i++) {
-        total = (total + monthlyAmt) * (1 + mr);
-      }
+      for (let i = 0; i < months; i++) total = (total + amount) * (1 + mr);
       grossInterest = total - principal;
     }
   } else {
-    const lumpsum = parseNumber(document.getElementById('lumpsum').value);
-    months        = getPeriod('deposit-period', 'deposit-period-custom');
-    if (!lumpsum) { alert('예치 금액을 입력해주세요!'); return; }
-    if (!months || months < 1) { alert('기간을 입력해주세요!'); return; }
-    principal = lumpsum;
-
-    if (interestMethod === 'simple') {
-      grossInterest = lumpsum * rate * months / 12;
+    principal = amount;
+    if (method === 'simple') {
+      grossInterest = amount * rate * months / 12;
     } else {
       const mr = rate / 12;
-      grossInterest = lumpsum * (Math.pow(1 + mr, months) - 1);
+      grossInterest = amount * (Math.pow(1 + mr, months) - 1);
     }
   }
+  const taxAmt    = Math.floor(grossInterest * tax / 100);
+  const netInt    = Math.floor(grossInterest) - taxAmt;
+  return { principal, grossInterest, taxAmt, netInt, total: principal + netInt };
+}
 
-  // 세금 계산 (원 미만 절사)
-  const taxAmt     = Math.floor(grossInterest * taxRate / 100);
-  const netInterest = Math.floor(grossInterest) - taxAmt;
-  const total      = principal + netInterest;
+// ── 적금/예금 계산 ────────────────────────────────────────────
+function calculate() {
+  let r, months, amount, tax, method, type;
+  if (currentTab === 'savings') {
+    amount = parseNumber(document.getElementById('monthly').value);
+    months = getPeriod('period', 'period-custom');
+    r      = parseFloat(document.getElementById('rate').value);
+    tax    = taxRate; method = interestMethod; type = 'savings';
+    if (!amount) { alert('월 납입금액을 입력해주세요!'); return; }
+  } else {
+    amount = parseNumber(document.getElementById('lumpsum').value);
+    months = getPeriod('deposit-period', 'deposit-period-custom');
+    r      = parseFloat(document.getElementById('rate-dep').value);
+    tax    = taxRateDep; method = methodDep; type = 'deposit';
+    if (!amount) { alert('예치 금액을 입력해주세요!'); return; }
+  }
+  if (isNaN(r) || r <= 0) { alert('금리를 올바르게 입력해주세요!'); return; }
+  if (!months || months < 1) { alert('기간을 입력해주세요!'); return; }
 
-  // ── 결과 표시 ─────────────────────────────────────────────────
+  const res = calcInterest(type, amount, months, r, method, tax);
+  _lastCalcResult = { ...res, months, annualRate: r, type };
+
   const fmt = n => Math.round(n).toLocaleString('ko-KR') + '원';
-
-  document.getElementById('r-total').textContent         = fmt(total);
+  document.getElementById('r-total').textContent         = fmt(res.total);
   document.getElementById('r-sub').textContent           =
-    `원금 ${principal.toLocaleString()}원 + 세후이자 ${netInterest.toLocaleString()}원`;
-  document.getElementById('r-principal').textContent     = fmt(principal);
-  document.getElementById('r-interest-pre').textContent  = fmt(grossInterest);
-  document.getElementById('r-taxrate').textContent       = taxRate === 0 ? '비과세' : taxRate + '%';
-  document.getElementById('r-tax').textContent           = taxRate === 0 ? '0원' : '-' + taxAmt.toLocaleString() + '원';
-  document.getElementById('r-interest-post').textContent = fmt(netInterest);
+    `원금 ${res.principal.toLocaleString()}원 + 세후이자 ${res.netInt.toLocaleString()}원`;
+  document.getElementById('r-principal').textContent     = fmt(res.principal);
+  document.getElementById('r-interest-pre').textContent  = fmt(res.grossInterest);
+  document.getElementById('r-taxrate').textContent       = tax === 0 ? '비과세' : tax + '%';
+  document.getElementById('r-tax').textContent           = tax === 0 ? '0원' : '-' + res.taxAmt.toLocaleString() + '원';
+  document.getElementById('r-interest-post').textContent = fmt(res.netInt);
 
   // 월 환산 이자 (예금만)
-  const monthlyRow = document.getElementById('r-monthly-row');
-  if (currentTab === 'deposit') {
-    document.getElementById('r-monthly-interest').textContent =
-      fmt(netInterest / months) + ' / 월';
-    monthlyRow.style.display = 'flex';
-  } else {
-    monthlyRow.style.display = 'none';
-  }
+  const mRow = document.getElementById('r-monthly-row');
+  if (type === 'deposit') {
+    document.getElementById('r-monthly-interest').textContent = fmt(res.netInt / months) + ' / 월';
+    mRow.style.display = 'flex';
+  } else { mRow.style.display = 'none'; }
 
   // 비율 바
-  const pPct = Math.max(1, Math.min(99, Math.round(principal / total * 100)));
-  const iPct = 100 - pPct;
-  document.getElementById('r-bar-p').style.width  = pPct + '%';
-  document.getElementById('r-bar-i').style.width  = iPct + '%';
-  document.getElementById('r-pct-p').textContent  = pPct + '%';
-  document.getElementById('r-pct-i').textContent  = iPct + '%';
+  const pPct = Math.max(1, Math.min(99, Math.round(res.principal / res.total * 100)));
+  document.getElementById('r-bar-p').style.width = pPct + '%';
+  document.getElementById('r-bar-i').style.width = (100 - pPct) + '%';
+  document.getElementById('r-pct-p').textContent = pPct + '%';
+  document.getElementById('r-pct-i').textContent = (100 - pPct) + '%';
+
+  // 인플레이션 갱신
+  updateInflation(res.total, months, r);
 
   // 회차별 상세 (적금만)
-  if (currentTab === 'savings') {
-    buildMonthlyTable(monthlyAmt, months, rate, interestMethod);
+  document.getElementById('monthly-toggle-wrap').style.display = type === 'savings' ? 'block' : 'none';
+  if (type === 'savings') {
+    buildMonthlyTable(amount, months, r / 100, method);
     document.getElementById('monthly-detail').style.display = 'none';
+    document.querySelector('.monthly-toggle').textContent = '📊 회차별 상세 보기 ▼';
   }
 
   document.getElementById('result').style.display = 'block';
   document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ── 회차별 테이블 ──────────────────────────────────────────────
+// ── 인플레이션 계산 ───────────────────────────────────────────
+function updateInflation(total, months, nominalRate) {
+  const inf = parseFloat(document.getElementById('inflation-rate').value) || 2.5;
+  const realRate = nominalRate - inf;
+  document.getElementById('inf-nominal').textContent   = nominalRate.toFixed(2) + '%';
+  document.getElementById('inf-inflation').textContent = '-' + inf.toFixed(1) + '%';
+  document.getElementById('inf-real').textContent      =
+    (realRate >= 0 ? '+' : '') + realRate.toFixed(2) + '%';
+  document.getElementById('inf-real').style.color = realRate >= 0 ? '#2E7D32' : '#C62828';
+  const realTotal = total / Math.pow(1 + inf / 100, months / 12);
+  document.getElementById('inf-real-total').textContent =
+    Math.round(realTotal).toLocaleString('ko-KR') + '원';
+}
+
+function recalcInflation() {
+  if (!_lastCalcResult) return;
+  updateInflation(_lastCalcResult.total, _lastCalcResult.months, _lastCalcResult.annualRate);
+}
+
+function toggleInflation() {
+  const body  = document.getElementById('inflation-body');
+  const arrow = document.getElementById('inflation-arrow');
+  const open  = body.style.display === 'block';
+  body.style.display  = open ? 'none' : 'block';
+  arrow.textContent   = open ? '▼' : '▲';
+}
+
+// ── 목표 역산 ─────────────────────────────────────────────────
+function calcGoal() {
+  const goal   = parseNumber(document.getElementById('goal-amount').value);
+  const months = getPeriod('goal-period', 'goal-period-custom');
+  const r      = parseFloat(document.getElementById('rate-goal').value);
+  const tax    = taxRateGoal;
+  const method = methodGoal;
+
+  if (!goal)   { alert('목표 금액을 입력해주세요!'); return; }
+  if (!months || months < 1) { alert('기간을 입력해주세요!'); return; }
+  if (isNaN(r) || r <= 0)   { alert('금리를 올바르게 입력해주세요!'); return; }
+
+  const rate = r / 100;
+  const taxMult = 1 - tax / 100;
+  let monthly;
+
+  if (method === 'simple') {
+    // total = n*m + m * rate/12 * n*(n+1)/2 * taxMult
+    //       = m * (n + rate/12 * n*(n+1)/2 * taxMult)
+    const denom = months + rate / 12 * months * (months + 1) / 2 * taxMult;
+    monthly = Math.ceil(goal / denom);
+  } else {
+    // S = m*(1+mr)*((1+mr)^n - 1)/mr  (월복리 미래가치)
+    // total = n*m + (S - n*m)*taxMult = n*m*(1-taxMult) + S*taxMult
+    //       = m * [n*(1-taxMult) + (1+mr)*((1+mr)^n - 1)/mr * taxMult]
+    const mr    = rate / 12;
+    const fv    = (1 + mr) * (Math.pow(1 + mr, months) - 1) / mr;
+    const denom = months * (1 - taxMult) + fv * taxMult;
+    monthly = Math.ceil(goal / denom);
+  }
+
+  // 검증: 실제 계산
+  const verify = calcInterest('savings', monthly, months, r, method, tax);
+
+  const fmt = n => Math.round(n).toLocaleString('ko-KR') + '원';
+  document.getElementById('gr-monthly').textContent  = fmt(monthly);
+  document.getElementById('gr-sub').textContent      =
+    `${months}개월 × ${monthly.toLocaleString()}원 = ${verify.total.toLocaleString()}원 수령`;
+  document.getElementById('gr-goal').textContent     = fmt(goal);
+  document.getElementById('gr-period').textContent   = months + '개월';
+  document.getElementById('gr-rate').textContent     = r + '%';
+  document.getElementById('gr-principal').textContent = fmt(verify.principal);
+  document.getElementById('gr-interest').textContent = fmt(verify.netInt);
+
+  document.getElementById('goal-result').style.display = 'block';
+  document.getElementById('goal-result').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── 금리 비교 ─────────────────────────────────────────────────
+function calcCompare() {
+  const amount = parseNumber(document.getElementById('cmp-amount').value);
+  const months = getPeriod('cmp-period', 'cmp-period-custom');
+  const rA     = parseFloat(document.getElementById('cmp-rate-a').value);
+  const rB     = parseFloat(document.getElementById('cmp-rate-b').value);
+  const rC     = parseFloat(document.getElementById('cmp-rate-c').value);
+
+  if (!amount) { alert('금액을 입력해주세요!'); return; }
+  if (!months || months < 1) { alert('기간을 입력해주세요!'); return; }
+  if ([rA,rB,rC].some(r => isNaN(r) || r < 0)) { alert('금리를 올바르게 입력해주세요!'); return; }
+
+  const results = [
+    { label: 'A', rate: rA, ...calcInterest(compareType, amount, months, rA, methodCmp, taxRateCmp) },
+    { label: 'B', rate: rB, ...calcInterest(compareType, amount, months, rB, methodCmp, taxRateCmp) },
+    { label: 'C', rate: rC, ...calcInterest(compareType, amount, months, rC, methodCmp, taxRateCmp) },
+  ];
+  const bestIdx = results.reduce((bi, r, i) => r.netInt > results[bi].netInt ? i : bi, 0);
+
+  const fmt = n => Math.round(n).toLocaleString('ko-KR') + '원';
+
+  // 카드
+  const cardsHtml = results.map((r, i) => `
+    <div class="compare-card ${i === bestIdx ? 'best' : ''}">
+      <div class="bank-name">금리 ${r.label}</div>
+      <div class="bank-rate">${r.rate}%</div>
+      <div class="bank-total">${fmt(r.total)}</div>
+      <div class="bank-interest">세후이자 ${fmt(r.netInt)}</div>
+    </div>`).join('');
+  document.getElementById('compare-cards').innerHTML = cardsHtml;
+
+  // 테이블
+  const taxLabel = taxRateCmp === 0 ? '비과세' : taxRateCmp + '%';
+  let tbl = `<table>
+    <tr><th>항목</th><th${bestIdx===0?' class="best-col"':''}>A (${rA}%)</th><th${bestIdx===1?' class="best-col"':''}>B (${rB}%)</th><th${bestIdx===2?' class="best-col"':''}>C (${rC}%)</th></tr>`;
+  const rows = [
+    ['원금', results.map(r => fmt(r.principal))],
+    ['세전 이자', results.map(r => fmt(r.grossInterest))],
+    [`이자소득세(${taxLabel})`, results.map(r => '-' + fmt(r.taxAmt))],
+    ['세후 이자 ✅', results.map(r => fmt(r.netInt))],
+    ['총 수령액', results.map(r => fmt(r.total))],
+    ['이자 차이', results.map(r => {
+      const diff = r.netInt - results[0].netInt;
+      return diff > 0 ? '+' + fmt(diff) : diff < 0 ? fmt(diff) : '기준';
+    })],
+  ];
+  rows.forEach(([label, vals]) => {
+    tbl += `<tr><td style="font-weight:700;">${label}</td>` +
+      vals.map((v,i) => `<td${i===bestIdx?' class="best-col"':''}>${v}</td>`).join('') +
+      '</tr>';
+  });
+  tbl += '</table>';
+  document.getElementById('compare-detail').innerHTML =
+    `<p style="font-size:12px;color:#888;margin-bottom:8px;">⭐ = 세후 이자 최고 금리 / A금리 대비 차이 표시</p>` + tbl;
+
+  document.getElementById('compare-results').style.display = 'block';
+  document.getElementById('compare-results').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── 회차별 테이블 ─────────────────────────────────────────────
 function buildMonthlyTable(monthlyAmt, months, rate, method) {
   let html = `<table>
     <tr><th>회차</th><th>납입액</th><th>누적원금</th><th>누적이자(세전)</th></tr>`;
@@ -431,11 +891,8 @@ function buildMonthlyTable(monthlyAmt, months, rate, method) {
   for (let i = 1; i <= months; i++) {
     cumP += monthlyAmt;
     if (method === 'simple') {
-      // 남은 기간에 대한 이자를 회차별로 배분 (역산)
       cumI = 0;
-      for (let j = 1; j <= i; j++) {
-        cumI += monthlyAmt * rate * (i - j + 1) / 12;
-      }
+      for (let j = 1; j <= i; j++) cumI += monthlyAmt * rate * (i - j + 1) / 12;
     } else {
       cumTotal = (cumTotal + monthlyAmt) * (1 + mr);
       cumI = cumTotal - cumP;
@@ -454,13 +911,9 @@ function buildMonthlyTable(monthlyAmt, months, rate, method) {
 function toggleMonthly() {
   const el  = document.getElementById('monthly-detail');
   const btn = document.querySelector('.monthly-toggle');
-  if (el.style.display === 'none' || el.style.display === '') {
-    el.style.display = 'block';
-    btn.textContent  = '📊 회차별 상세 접기 ▲';
-  } else {
-    el.style.display = 'none';
-    btn.textContent  = '📊 회차별 상세 보기 ▼';
-  }
+  const open = el.style.display === 'block';
+  el.style.display = open ? 'none' : 'block';
+  btn.textContent  = open ? '📊 회차별 상세 보기 ▼' : '📊 회차별 상세 접기 ▲';
 }
 </script>
 </body>
